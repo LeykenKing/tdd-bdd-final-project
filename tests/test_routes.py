@@ -200,10 +200,34 @@ class TestProductRoutes(TestCase):
         response = self.client.get(response.status_code, status.HTTP_200_OK)
         data = response.get_json()
         self.assertEqual(len(data),5)
-        # send a self.client.get() request to the BASE_URL
-        # assert that the resp.status_code is status.HTTP_200_OK
-        # get the data from resp.get_json()
-        # assert that the len() of the data is 5 (the number of products you created)
+
+
+    def test_query_by_name(self):
+        """It should Query Products by name"""
+        products = self._create_products(5)
+        test_name = products[0].name
+        name_count = 0
+        for product in products:
+          if(product.name == test_name):
+            name_count = name_count + 1
+            
+        response = self.client.get(
+            BASE_URL, query_string=f"name={quote_plus(test_name)}"
+        )     
+        self.assertEqual(response.status_code, status.HTTP_200_OK)  
+        data = response.get_json()
+        self.assertEqual(len(data),name_count)
+        for product in products:
+          self.assertEqual(product["name"], test_name)
+        
+
+        # extract the name of the first product in the products list and assigns it to the variable test_name
+        # count the number of products in the products list that have the same name as the test_name
+        # send an HTTP GET request to the URL specified by the BASE_URL variable, along with a query parameter "name"
+        # assert that response status code is 200, indicating a successful request (HTTP 200 OK)
+        # retrieve the JSON data from the response
+        # assert that the length of the data list (i.e., the number of products returned in the response) is equal to name_count
+        # use a for loop to iterate through the products in the data list and checks if each product's name matches the test_name
 
     #
 
