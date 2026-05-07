@@ -105,24 +105,63 @@ def create_products():
 ######################################################################
 # R E A D   A   P R O D U C T
 ######################################################################
+@app.route("/products/<int:product_id>", methods=["GET"])
+def get_products(product_id):
+    """
+    Retrieve a single Product
 
-#
-# PLACE YOUR CODE HERE TO READ A PRODUCT
-#
+    This endpoint will return a Product based on it's id
+    """
+    app.logger.info("Request to Retrieve a product with id [%s]", product_id)
+    product = Product.find(product_id)
+    if not product:
+        abort(status.HTTP_404_NOT_FOUND, f"Product with id '{product_id}' was not found.")
+        
+    app.logger.info("Retruning product: [%s]", product_id)
+
+
+    return product.serialize(), status.HTTP_200_OK
+
 
 ######################################################################
 # U P D A T E   A   P R O D U C T
 ######################################################################
+@app.route("/products/<int:product_id>", methods=["PUT"])
+def test_update_product(product_id):
+    """It should Update an existing Product"""
+    # create a product to update
+    test_product = ProductFactory()
+    response =self.client.post(BASE_URL, json = test_product.serialize())
+    self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    new_product = resp.get_json()
+    new_product["description"] = "unknown"
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    update_product = resp.get_json()
+    self.assertEqual(update_product["description"], "unknow")
 
-#
-# PLACE YOUR CODE TO UPDATE A PRODUCT HERE
-#
+
 
 ######################################################################
 # D E L E T E   A   P R O D U C T
 ######################################################################
+@app.route("/products/<int:product_id>", methods=["DELETE"])
+def test_delete_product(self):
+    """It should Delete a Product"""
 
+        # create a list products containing 5 products using the _create_products() method. 
+    products = self._create_products(5)
+    product_count = self.get_product_count()
+    test_product = products[0]
+    response = self.client.delete(f"{BASE_URL}/{test_product.id}")
+    self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+    self.assertEqual(len(response.data, 0)
+        # call the self.get_product_count() method to retrieve the initial count of products before any deletion
+        # assign the first product from the products list to the variable test_product
+        # send a self.client.delete() request to the BASE_URL with test_product.id
+        # assert that the resp.status_code is status.HTTP_204_NO_CONTENT
+        # check if the response data is empty 
+        # send a self.client.get request to the same endpoint that was deleted to retrieve the deteled product
+        # assert that the resp.status_code is status.HTTP_404_NOT_FOUND to confirm deletion of the product
+        # retrieve the count of products after the deletion operation
+        # check if the new count of products is one less than the initial count
 
-#
-# PLACE YOUR CODE TO DELETE A PRODUCT HERE
-#
