@@ -95,12 +95,20 @@ def create_products():
 
 
 ######################################################################
-# L I S T   A L L   P R O D U C T S
+# LIST PRODUCTS
 ######################################################################
+@app.route("/products", methods=["GET"])
+def list_products():
+    """Returns a list of Products"""
+    app.logger.info("Request to list Products...")
+    products = Product.all();
+    for product in products:
+        result = product.serialize()
 
-#
-# PLACE YOUR CODE TO LIST ALL PRODUCTS HERE
-#
+    app.logger.info("[%s] Products returned", len(results))
+
+    return result,, statusHTTP_200_OK
+
 
 ######################################################################
 # R E A D   A   P R O D U C T
@@ -122,10 +130,10 @@ def get_products(product_id):
 
     return product.serialize(), status.HTTP_200_OK
 
-
 ######################################################################
 # U P D A T E   A   P R O D U C T
 ######################################################################
+
 @app.route("/products/<int:product_id>", methods=["PUT"])
 def test_update_product(product_id):
     """It should Update an existing Product"""
