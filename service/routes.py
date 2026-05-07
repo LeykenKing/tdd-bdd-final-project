@@ -155,13 +155,5 @@ def test_delete_product(self):
     response = self.client.delete(f"{BASE_URL}/{test_product.id}")
     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
     self.assertEqual(len(response.data, 0)
-        # call the self.get_product_count() method to retrieve the initial count of products before any deletion
-        # assign the first product from the products list to the variable test_product
-        # send a self.client.delete() request to the BASE_URL with test_product.id
-        # assert that the resp.status_code is status.HTTP_204_NO_CONTENT
-        # check if the response data is empty 
-        # send a self.client.get request to the same endpoint that was deleted to retrieve the deteled product
-        # assert that the resp.status_code is status.HTTP_404_NOT_FOUND to confirm deletion of the product
-        # retrieve the count of products after the deletion operation
-        # check if the new count of products is one less than the initial count
+
 
