@@ -101,14 +101,26 @@ def create_products():
 def list_products():
     """Returns a list of Products"""
     app.logger.info("Request to list Products...")
-    products = Product.all();
-    for product in products:
-        result = product.serialize()
 
+    products = []
+    name = request.args.get("name")
+    category = request.args.get("category")
+
+    if name:
+        app.logger.info("Find by name: %s", name)
+        products = Product.find_by_name(name)
+    elif category:
+        app.logger.info("Find by category: %s", category)
+        # create enum from string
+        category_value = getattr(Category, category.upper())
+        products = Product.find_by_category(category_value)
+    else:
+        app.logger.info("Find all")
+        products = Product.all()
+
+    results = [product.serialize() for product in products]
     app.logger.info("[%s] Products returned", len(results))
-
-    return result,, statusHTTP_200_OK
-
+    return results, status.HTTP_200_OK
 
 ######################################################################
 # R E A D   A   P R O D U C T
