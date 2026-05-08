@@ -38,3 +38,20 @@ Scenario: Create a Product
     And I should see "True" in the "Available" dropdown
     And I should see "Tools" in the "Category" dropdown
     And I should see "34.95" in the "Price" field
+
+Scenario: Update a Product
+    When I visit the "Home Page"
+	And I set the "Name" to "Hat"
+    And I press "Search" button
+    Then I should see a "Sucess" message
+    And I should see a "Red Fedora" in the "Description" field
+    When I change "Name" to "Fedora"
+    And i press the "Update" button
+    Then I should see the "Sucess" message
+    When I copy the "Id" field
+    And I press the "Clear" button
+    And I paste the "Id" field
+    And I press the "Retrieve" button
+    Then I should see a "Sucess" message
+    And I should see "Fedora" in the results
+    And I should not see "Hat" in the results
