@@ -55,3 +55,70 @@ Scenario: Update a Product
     Then I should see a "Sucess" message
     And I should see "Fedora" in the results
     And I should not see "Hat" in the results
+
+Scenario: Delete a Product
+    When I visit the "Home Page"
+    And I set the "Name" to "Hat"
+	And I press "Search" button
+	Then I should see a "Sucess" message
+	And I should see a a "Red Fedora" in the "Description" field
+	When I copy the "Id" field
+    And I press the "Clear" button
+    And I paste the "Id" field
+	And I press the "Delete" button
+	Then I should see "Product has been Deleted!" message
+	When I press the "Clear" button
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should not see "Hat" in the results
+
+Scenario: List all products
+    When I visit the "Home Page"
+    And I press the "Clear" button
+	And I press the "Search" button
+	Then I should see a "Sucess" message
+  	And I should see "Hat" in the results
+    And I should see "Shoes" in the results
+    And I should see "Big Mac" in the results
+    And I should see "Sheets" in the results
+	
+Scenario: Search by category
+    When I visit the "Home Page"
+    And I press the "Clear" button
+	And I select the "Food" in the "Category" dropdown
+	And I press the "Search" button
+	Then I should see "Sucess" message
+	
+Scenario: Search by category
+    When I visit the "Home Page"
+    And I press the "Clear" button
+    And I select "Food" in the "Category" dropdown
+    And I press the "Search" button
+    Then I should see the message "Success"
+    And I should see "Big Mac" in the results
+    And I should not see "Hat" in the results
+    And I should not see "Shoes" in the results
+    And I should not see "Sheets" in the results
+
+Scenario: Search by available
+    When I visit the "Home Page"
+	And I press the "Clear" button
+	And I set "True" in the "Available" dropdown
+	And I press the "Search" button
+    Then I should see the message "Success"
+	And I should see "Big Mac" in the results
+    And I should see "Hat" in the results
+	And I should see "Sheets" in the results
+    And I should not see "Shoes" in the results
+
+Scenario: Search by name
+    When I visit the "Home Page"
+    And I set the "Name" to "Hat"
+    And I press the "Search" button
+  	Then I should see the message "Success"
+	And I should see "Hat" in the "Name" field
+	And i should see a "Red fedora" in the "Description"
+
+
+
+
